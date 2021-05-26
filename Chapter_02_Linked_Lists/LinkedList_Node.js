@@ -1,170 +1,108 @@
-export class Node {
+class Node {
+    next;
+
     constructor(value) {
         this.value = value;
-        this.next = null;
     }
 }
 
-export class LinkedList {
+class LinkedList {
+    head = null;
+    length = 0;
+
     constructor() {
-        this.head = null;
-        this.length = 0;
     }
+
 
     add(value) {
-        const node = new Node(value);
-
-        if (!this.length) {
-            this.head = node;
-            // If there are no nodes 
-            // node variable will be the first and head node in the list
-        } else {
-            let current = this.head;
-
-            while (current.next) {
-                current = current.next;
-            }
-
-            current.next = new Node(value);
+        if (!value) {
+            return;
         }
 
-        this.length++;
-    }
+        let current = this.head, prev;
 
-    insertAt(position, value) {
-        if (position < 0 || position > this.length) {
-            // returns the warning message 
-            // if incorrect position was specified
-            return 'Incorrect value of position';
+        if (!this.head) {
+            this.head = new Node(value);
+            this.length++;
+
+            return this.length;
         }
-
-        const node = new Node(value);
-        // creates the node using class Node
-
-        if (position === 0) {
-            node.next = this.head;
-            this.head = node;
-        } else {
-            let current = this.head;
-            let prev = null;
-            let index = 0;
-
-            while (index < position) {
-                prev = current;
-                current = current.next;
-                index++;
-            }
-
-            prev.next = node;
-            node.next = current;
-        }
-
-        this.length++;
-    }
-
-    getNodeByPosition(position) {
-        if (position < 0 || position > this.length) {
-            // verification of the specified position value
-            return 'Incorrect value of position';
-        }
-
-        let current = this.head;
-        // the head of the list
-        let index = 0;
-        // the index for incrementation
-
-        while (index < position) {
-            // goes through each node until the index reaches the position
-            current = current.next;
-            // moves the link to the next node of the current node
-            index++;
-            // increaments the index
-        }
-
-        return current.value;
-    }
-
-    removeFromPosition(position) {
-        if (position < 0 || position > this.length) {
-            //verification on correct value of position like in the insertInPosition and getNodeByPosition
-            return 'Incorrect value of position';
-        }
-
-        let current = this.head;
-        // now current is the head of the Linked List
-
-        if (position === 0) {
-            this.head = current.next;
-        } else {
-            let prev = null;
-            let index = 0;
-
-            while (index < position) {
-                prev = current;
-                current = current.next;
-                index++;
-            }
-
-            prev.next = current.next;
-        }
-
-        this.length--;
-        return current.value;
-    }
-
-    getIndexOf(value) {
-        let current = this.head;
-        // current is a head of our list
-        let index = 0;
-        // index which will be returned
 
         while (current) {
-            if (current.value === value) {
-                return index;
-            }
-
-            current = current.next;
-            index++;
-        }
-
-        return -1;
-    }
-
-    removeElement(element) {
-        let current = this.head;
-        let prev = null;
-
-        // iterate over the list
-        while (current != null) {
-            // comparing element with current
-            // element if found then remove the
-            // and return true
-            if (current.element === element) {
-
-                if (!prev) {
-                    this.head = current.next;
-                } else {
-                    prev.next = current.next;
-                }
-
-                this.size--;
-                return current.element;
-            }
-
             prev = current;
             current = current.next;
         }
 
-        return -1;
+        prev.next = new Node(value);
+        this.length++;
+
+        return this.length;
+    }
+
+    addArray(array) {
+        array.forEach(value => this.add(value));
+    }
+
+    remove(value) {
+        if (!value || !this.head) {
+            return;
+        }
+
+        if (this.head === value) {
+            this.head = this.head.next;
+            this.length--;
+
+            return this.length;
+        }
+
+        let current = this.head, prev;
+
+        while (current && current.value !== value) {
+            prev = current;
+            current = current.next;
+        }
+
+        prev.next = current.next;
+        this.length--;
+
+        return this.length;
+    }
+
+    findIndex(value) {
+        if (!value || !this.head) {
+            return -1;
+        }
+
+        let index = 0, current = this.head, prev;
+
+        if (value === this.head) {
+            return index;
+        }
+
+        while (current && current.value !== value) {
+            index++;
+            prev = current;
+            current = current.next;
+        }
+
+        return current.value === value ? index : -1;
     }
 
     print() {
-        let current = this.head;
+        if (!this.head) {
+            return;
+        }
+
+        let current = this.head, prev, row = '';
 
         while (current) {
-            console.log(current.value);
-            // output the value of the node
+            row += `${current.value} -> `;
+            prev = current;
             current = current.next;
         }
+
+        console.log(row);
     }
 }
+
+module.exports = {LinkedList, Node};
