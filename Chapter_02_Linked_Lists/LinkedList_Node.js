@@ -41,6 +41,7 @@ class LinkedList {
 
     addArray(array) {
         array.forEach(value => this.add(value));
+        return this.head;
     }
 
     remove(value) {
