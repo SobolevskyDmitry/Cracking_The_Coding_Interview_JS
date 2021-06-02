@@ -1,18 +1,5 @@
-const {Node} = require("./LinkedList_Node");
+const {Node, addExistingNode} = require("./LinkedList_Node");
 
-function addExistingNode(node, newNode) {
-    if (!node || !newNode) {
-        return node;
-    }
-
-    if (!node.next) {
-        node.next = newNode;
-
-        return node;
-    } else {
-        return addExistingNode(node.next, newNode);
-    }
-}
 
 function getTailAndSize(node, count = 0) {
     if (!node || !node.next) {

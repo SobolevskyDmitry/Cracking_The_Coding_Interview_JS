@@ -1,19 +1,4 @@
-const {LinkedList, Node} = require("./LinkedList_Node");
-
-
-function addNewNode(node, value) {
-    if (!node || value === undefined) {
-        return node;
-    }
-
-    if (!node.next) {
-        node.next = new Node(value);
-
-        return node;
-    } else {
-        return addNewNode(node.next, value);
-    }
-}
+const {addNewNode, Node} = require("./LinkedList_Node");
 
 function addArray(node, arr) {
     arr.forEach((val) => addNewNode(node, val));

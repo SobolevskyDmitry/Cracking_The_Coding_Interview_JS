@@ -106,4 +106,32 @@ class LinkedList {
     }
 }
 
-module.exports = {LinkedList, Node};
+function addNewNode(node, value) {
+    if (!node || value === undefined) {
+        return node;
+    }
+
+    if (!node.next) {
+        node.next = new Node(value);
+
+        return node;
+    } else {
+        return addNewNode(node.next, value);
+    }
+}
+
+function addExistingNode(node, newNode) {
+    if (!node || !newNode) {
+        return node;
+    }
+
+    if (!node.next) {
+        node.next = newNode;
+
+        return node;
+    } else {
+        return addExistingNode(node.next, newNode);
+    }
+}
+
+module.exports = {LinkedList, Node, addNewNode, addExistingNode};
