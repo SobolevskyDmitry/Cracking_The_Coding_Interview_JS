@@ -93,4 +93,23 @@ class BST {
     }
 }
 
-module.exports = {BST, Node};
+
+function createBst(values) {
+    return createMinimalBST(values, 0, values.length - 1, new BST());
+}
+
+function createMinimalBST(values, start, end, tree) {
+    if (end < start) {
+        return;
+    }
+
+    const midIndex = Math.floor((start + end) / 2);
+    tree.addNode(values[midIndex]);
+
+    createMinimalBST(values, start, midIndex - 1, tree);
+    createMinimalBST(values, midIndex + 1, end, tree);
+
+    return tree;
+}
+
+module.exports = {BST, Node, createBst};
